@@ -491,6 +491,10 @@ def generate_index_html(users_data, users_config):
             text-align: center;
         }
 
+        .folder-row {
+            cursor: pointer;
+        }
+
         .folder-heading {
             font-size: 14px;
             color: #999;
@@ -692,7 +696,7 @@ def generate_index_html(users_data, users_config):
             <div class="detail-meta" id="detailFileMeta"></div>
             <div class="preview-area" id="previewArea"></div>
             <a href="#" id="downloadBtn" class="download-btn" download>download</a>
-            <div class="detail-nav">
+            <div class="detail-nav" id="detailNav">
                 <button class="nav-btn" id="prevBtn" onclick="navFile(-1)">← prev</button>
                 <span class="nav-counter" id="navCounter"></span>
                 <button class="nav-btn" id="nextBtn" onclick="navFile(1)">next →</button>
@@ -797,8 +801,15 @@ def generate_index_html(users_data, users_config):
             }} catch(e) {{
                 currentFiles = [];
             }}
+            currentView = 'root';
+            currentFolder = '';
             renderFileList();
         }}
+
+        const folderSvg = '<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>';
+        let currentView = 'root';
+        let currentFolder = '';
+        let folderFiles = [];
 
         function renderFileList() {{
             const grid = document.getElementById('filesGrid');
@@ -806,27 +817,65 @@ def generate_index_html(users_data, users_config):
                 grid.innerHTML = '<p class="no-files">no files available</p>';
                 return;
             }}
-            const folderIcon = '<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>';
+
+            if (currentView === 'folder') {{
+                renderFolderView(grid);
+                return;
+            }}
+
+            // Root view: show folders as clickable rows, then root files
+            const folders = [...new Set(currentFiles.filter(f => f.folder).map(f => f.folder.split('/')[0]))];
+            const rootFiles = currentFiles.filter(f => !f.folder);
+
             let html = '';
-            let lastFolder = null;
-            currentFiles.forEach((f, i) => {{
-                const folder = f.folder || '';
-                if (folder !== lastFolder) {{
-                    if (lastFolder !== null) html += '</table>';
-                    if (folder) {{
-                        html += '<div class="folder-heading">' + folderIcon + '<span>' + folder + '</span></div>';
-                    }} else if (lastFolder !== null || currentFiles.some(x => x.folder)) {{
-                        html += '<div class="folder-heading"><span>files</span></div>';
-                    }}
-                    html += '<table class="file-table">';
-                    lastFolder = folder;
-                }}
+            if (folders.length) {{
+                html += '<table class="file-table">';
+                folders.forEach(name => {{
+                    const count = currentFiles.filter(f => f.folder && f.folder.split('/')[0] === name).length;
+                    html += '<tr class="file-row folder-row" onclick="openFolder(\'' + name.replace(/'/g, "\\'") + '\')">';
+                    html += '<td class="col-icon">' + folderSvg + '<span class="type-label">folder</span></td>';
+                    html += '<td class="col-name">' + name + '</td>';
+                    html += '<td class="col-size">' + count + ' file' + (count !== 1 ? 's' : '') + '</td>';
+                    html += '<td class="col-actions"></td>';
+                    html += '</tr>';
+                }});
+                html += '</table>';
+            }}
+
+            if (rootFiles.length) {{
+                html += '<table class="file-table">';
+                rootFiles.forEach((f, i) => {{
+                    const ri = currentFiles.indexOf(f);
+                    html += '<tr class="file-row">';
+                    html += '<td class="col-icon">' + fileIcon(f.category) + '<span class="type-label">' + f.category + '</span></td>';
+                    html += '<td class="col-name">' + f.name + '</td>';
+                    html += '<td class="col-size">' + f.size + '</td>';
+                    html += '<td class="col-actions">';
+                    html += '<a class="action-btn" href="#" onclick="event.preventDefault();openFileFromRoot(' + ri + ')">view file</a>';
+                    html += '<a class="action-btn" href="https://drive.google.com/uc?export=download&id=' + f.id + '" download>download file</a>';
+                    html += '</td>';
+                    html += '</tr>';
+                }});
+                html += '</table>';
+            }}
+
+            if (!folders.length && !rootFiles.length) {{
+                html = '<p class="no-files">no files available</p>';
+            }}
+            grid.innerHTML = html;
+        }}
+
+        function renderFolderView(grid) {{
+            folderFiles = currentFiles.filter(f => f.folder && f.folder.split('/')[0] === currentFolder);
+            let html = '<div class="folder-heading">' + folderSvg + '<span>' + currentFolder + '</span></div>';
+            html += '<table class="file-table">';
+            folderFiles.forEach((f, i) => {{
                 html += '<tr class="file-row">';
                 html += '<td class="col-icon">' + fileIcon(f.category) + '<span class="type-label">' + f.category + '</span></td>';
                 html += '<td class="col-name">' + f.name + '</td>';
                 html += '<td class="col-size">' + f.size + '</td>';
                 html += '<td class="col-actions">';
-                html += '<a class="action-btn" href="#" onclick="event.preventDefault();openFile(' + i + ')">view file</a>';
+                html += '<a class="action-btn" href="#" onclick="event.preventDefault();openFileFromFolder(' + i + ')">view file</a>';
                 html += '<a class="action-btn" href="https://drive.google.com/uc?export=download&id=' + f.id + '" download>download file</a>';
                 html += '</td>';
                 html += '</tr>';
@@ -835,14 +884,30 @@ def generate_index_html(users_data, users_config):
             grid.innerHTML = html;
         }}
 
+        function openFolder(name) {{
+            currentView = 'folder';
+            currentFolder = name;
+            history.pushState({{view: 'folder', folder: name}}, '');
+            renderFileList();
+        }}
+
         let currentIndex = -1;
+        let navContext = 'none';
 
-        function openFile(index) {{
-            const file = currentFiles[index];
+        function openFileFromRoot(index) {{
+            navContext = 'none';
+            showDetail(currentFiles[index]);
+        }}
+
+        function openFileFromFolder(folderIdx) {{
+            navContext = 'folder';
+            currentIndex = folderIdx;
+            showDetail(folderFiles[folderIdx]);
+        }}
+
+        function showDetail(file) {{
             if (!file) return;
-
-            currentIndex = index;
-            history.pushState({{view: 'detail', index: index}}, '');
+            history.pushState({{view: 'detail'}}, '');
 
             document.getElementById('filesSection').classList.remove('active');
             const detail = document.getElementById('detailView');
@@ -870,27 +935,46 @@ def generate_index_html(users_data, users_config):
 
             document.getElementById('downloadBtn').href = downloadLink;
 
-            // Update prev/next nav
-            document.getElementById('prevBtn').classList.toggle('disabled', index <= 0);
-            document.getElementById('nextBtn').classList.toggle('disabled', index >= currentFiles.length - 1);
-            document.getElementById('navCounter').textContent = (index + 1) + ' / ' + currentFiles.length;
+            // Show/hide prev/next nav
+            const nav = document.getElementById('detailNav');
+            if (navContext === 'folder' && folderFiles.length > 1) {{
+                nav.style.display = 'flex';
+                document.getElementById('prevBtn').classList.toggle('disabled', currentIndex <= 0);
+                document.getElementById('nextBtn').classList.toggle('disabled', currentIndex >= folderFiles.length - 1);
+                document.getElementById('navCounter').textContent = (currentIndex + 1) + ' / ' + folderFiles.length;
+            }} else {{
+                nav.style.display = 'none';
+            }}
         }}
 
         function navFile(delta) {{
             const newIndex = currentIndex + delta;
-            if (newIndex >= 0 && newIndex < currentFiles.length) {{
-                openFile(newIndex);
+            if (newIndex >= 0 && newIndex < folderFiles.length) {{
+                currentIndex = newIndex;
+                showDetail(folderFiles[newIndex]);
             }}
         }}
 
         function backToList() {{
             document.getElementById('detailView').classList.remove('active');
             document.getElementById('filesSection').classList.add('active');
+            if (currentView === 'folder') {{
+                renderFileList();
+            }}
         }}
 
         window.addEventListener('popstate', function(e) {{
-            if (document.getElementById('detailView').classList.contains('active')) {{
-                backToList();
+            const detail = document.getElementById('detailView');
+            if (detail.classList.contains('active')) {{
+                detail.classList.remove('active');
+                document.getElementById('filesSection').classList.add('active');
+                if (currentView === 'folder') {{
+                    renderFileList();
+                }}
+            }} else if (currentView === 'folder') {{
+                currentView = 'root';
+                currentFolder = '';
+                renderFileList();
             }}
         }});
 
