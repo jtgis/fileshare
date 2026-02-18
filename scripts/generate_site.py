@@ -629,11 +629,15 @@ def generate_index_html(users_data, users_config):
         .fullscreen-overlay .fs-bar {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
+            gap: 8px;
             width: 100%;
             padding: 10px 20px;
             box-sizing: border-box;
             background: rgba(0,0,0,0.85);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
         }
 
         .fullscreen-overlay .fs-bar .fs-name {
@@ -643,12 +647,12 @@ def generate_index_html(users_data, users_config):
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            margin-right: auto;
         }
 
         .fullscreen-overlay .fs-bar .fs-counter {
             color: #888;
             font-size: 12px;
-            margin: 0 16px;
         }
 
         .fullscreen-overlay .fs-bar button {
@@ -659,8 +663,8 @@ def generate_index_html(users_data, users_config):
             font-size: 13px;
             font-family: 'Courier New', Courier, monospace;
             cursor: pointer;
-            margin-left: 8px;
             width: auto;
+            margin-top: 0;
         }
 
         .fullscreen-overlay .fs-bar button:hover {
@@ -809,10 +813,7 @@ def generate_index_html(users_data, users_config):
         <div class="files-section" id="filesSection">
             <div class="user-header">
                 <div class="welcome-text"><span id="displayName"></span> file share</div>
-                <div class="header-right">
-                    <button class="logout-btn" onclick="downloadAll()">download all</button>
-                    <button class="logout-btn" onclick="logout()">logout</button>
-                </div>
+                <button class="logout-btn" onclick="logout()">logout</button>
             </div>
             
             <div class="files-list" id="filesGrid"></div>
@@ -1021,7 +1022,6 @@ def generate_index_html(users_data, users_config):
                     html += '<td class="col-size">' + count + ' file' + (count !== 1 ? 's' : '') + '</td>';
                     html += '<td class="col-actions">';
                     html += '<a class="action-btn" href="#" onclick="event.stopPropagation();event.preventDefault();openFolder(' + fi + ')">view folder contents</a>';
-                    html += '<a class="action-btn" href="#" onclick="event.stopPropagation();event.preventDefault();downloadFolderByIdx(' + fi + ')">download folder</a>';
                     html += '</td>';
                     html += '</tr>';
                 }});
@@ -1149,39 +1149,6 @@ def generate_index_html(users_data, users_config):
             if (currentView === 'folder') {{
                 renderFileList();
             }}
-        }}
-
-        // Batch download
-        function batchDownload(files) {{
-            files.forEach((f, i) => {{
-                setTimeout(() => {{
-                    const a = document.createElement('a');
-                    a.href = downloadUrl(f);
-                    a.download = f.name;
-                    a.style.display = 'none';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                }}, i * 500);
-            }});
-        }}
-
-        function downloadAll() {{
-            if (!currentFiles.length) return;
-            batchDownload(currentFiles);
-        }}
-
-        function downloadFolder(folderPath) {{
-            const files = currentFiles.filter(f => f.folder && (f.folder === folderPath || f.folder.startsWith(folderPath + '/')));
-            if (!files.length) return;
-            batchDownload(files);
-        }}
-
-        function downloadFolderByIdx(idx) {{
-            const name = folderNames[idx];
-            if (!name) return;
-            const fullPath = currentFolder ? currentFolder + '/' + name : name;
-            downloadFolder(fullPath);
         }}
 
         // Fullscreen mode
