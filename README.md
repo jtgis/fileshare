@@ -171,6 +171,39 @@ Or simply:
 
 ---
 
+## 🧪 Testing Locally
+
+Before setting up GitHub Actions, test the Google Drive sync locally:
+
+1. **Download your service account credentials**:
+   - Go to Google Cloud Console → Your project → Service Accounts
+   - Click the service account → Keys → Download the JSON file
+   - Save it as `credentials.json` in your repo root
+
+2. **Install Python dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Test the sync**:
+   ```bash
+   export GDRIVE_ROOT_FOLDER_ID='your_folder_id_here'
+   GOOGLE_DRIVE_CREDENTIALS=$(cat credentials.json) python scripts/gdrive_sync.py
+   ```
+
+   If successful, you'll see JSON output with your users and files.
+
+4. **Test generating the site**:
+   ```bash
+   python scripts/generate_site.py <gdrive_files.json> data/users.json docs/
+   ```
+
+5. **Open** `docs/index.html` in your browser to preview
+
+**⚠️ Important**: Never commit `credentials.json` to GitHub. Keep it local and use GitHub Secrets in Actions.
+
+---
+
 ## 📱 Mobile Support
 
 The site is fully mobile-responsive:
@@ -200,6 +233,27 @@ The site is fully mobile-responsive:
     └── users/
   ```
 - Double-check the folder ID in secrets
+- Make sure the service account has access to the folder (folder is shared with the service account email)
+
+### Action fails with "GOOGLE_DRIVE_CREDENTIALS not set"
+
+- Verify the secret is created in GitHub Settings → Secrets and Variables → Actions
+- Secret name must be exactly `GOOGLE_DRIVE_CREDENTIALS`
+- Make sure you pasted the **entire contents** of the JSON file, not just part of it
+
+### Action script exits with code 1 but no error message
+
+1. Check the workflow logs (Actions tab → Click the failed run)
+2. Look for error messages in the run output
+3. Test locally first:
+   ```bash
+   export GDRIVE_ROOT_FOLDER_ID='your_folder_id'
+   GOOGLE_DRIVE_CREDENTIALS=$(cat credentials.json) python scripts/gdrive_sync.py
+   ```
+4. If local test works but Actions fails, the issue is usually:
+   - JSON credentials not properly escaped in the secret
+   - Service account doesn't have permission to the folder
+   - Folder ID is incorrect
 
 ### Files not appearing on site
 
@@ -218,6 +272,37 @@ The site is fully mobile-responsive:
 - Make sure the files are in the correct folder in Google Drive
 - File names should not have special characters
 - Check that the service account has access to the files
+- Google Drive links should be publicly accessible (service account creates them as such)
+
+---
+
+## 🛠️ Local Testing Checklist
+
+Before pushing to GitHub:
+
+- [ ] Created `fileShareSite/users/` folder structure in Google Drive
+- [ ] Created service account and downloaded JSON key
+- [ ] Shared the folder with the service account email
+- [ ] Local sync works: `GOOGLE_DRIVE_CREDENTIALS=$(cat credentials.json) python scripts/gdrive_sync.py`
+- [ ] Generated HTML locally: `python scripts/generate_site.py data/gdrive_files.json data/users.json docs/`
+- [ ] Tested login in `docs/index.html` (browser)
+- [ ] Added users: `python scripts/add_user.py testuser testpass`
+- [ ] GitHub secrets configured correctly
+- [ ] GitHub Pages enabled in Settings
+
+---
+
+## 📝 Files not appearing on site
+
+**Check the sync output:**
+
+1. Go to Actions tab
+2. Click the latest "Generate Static Site from Google Drive" run
+3. Look at the logs to see what happened
+4. Common issues:
+   - No users folder found
+   - Service account doesn't have permission
+   - Credentials JSON is malformed
 
 ---
 
@@ -283,6 +368,7 @@ If you encounter issues:
 2. Verify your Google Drive structure
 3. Ensure secrets are set correctly
 4. Check that the service account has folder permissions
+5. Run the local test to isolate the problem
 
 ---
 
