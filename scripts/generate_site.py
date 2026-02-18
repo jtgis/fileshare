@@ -31,10 +31,11 @@ def render_file_card(file):
                 <div class="file-name">{name}</div>
                 <div class="file-size">{size}</div>
             </div>
-            <video controls style="width: 100%; max-width: 600px; margin: 10px 0;">
+            <video controls style="width: 100%; max-width: 700px; margin: 10px 0;">
                 <source src="{link}" type="video/mp4">
                 Your browser does not support the video element.
             </video>
+            <a href="{link}" download class="download-btn">Download</a>
         </div>
         '''
     elif file['category'] == 'audio':
@@ -44,10 +45,11 @@ def render_file_card(file):
                 <div class="file-name">{name}</div>
                 <div class="file-size">{size}</div>
             </div>
-            <audio controls style="width: 100%; max-width: 600px; margin: 10px 0;">
+            <audio controls style="width: 100%; max-width: 700px; margin: 10px 0;">
                 <source src="{link}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
+            <a href="{link}" download class="download-btn">Download</a>
         </div>
         '''
     elif file['category'] == 'image':
@@ -57,7 +59,8 @@ def render_file_card(file):
                 <div class="file-name">{name}</div>
                 <div class="file-size">{size}</div>
             </div>
-            <img src="{link}" alt="{name}" style="max-width: 600px; width: 100%; margin: 10px 0; border: 1px solid #ddd;" loading="lazy">
+            <img src="{link}" alt="{name}" style="max-width: 700px; width: 100%; margin: 10px 0; border: 1px solid #333;" loading="lazy">
+            <a href="{link}" download class="download-btn">Download</a>
         </div>
         '''
     elif file['category'] == 'pdf':
@@ -67,7 +70,8 @@ def render_file_card(file):
                 <div class="file-name">{name}</div>
                 <div class="file-size">{size}</div>
             </div>
-            <a href="{link}" target="_blank">Open PDF</a>
+            <iframe src="{link}" style="width: 100%; max-width: 700px; height: 500px; margin: 10px 0; border: 1px solid #333;"></iframe>
+            <a href="{link}" target="_blank" class="download-btn">Open PDF</a>
         </div>
         '''
     else:
@@ -77,7 +81,10 @@ def render_file_card(file):
                 <div class="file-name">{name}</div>
                 <div class="file-size">{size}</div>
             </div>
-            <a href="{link}" download>Download</a>
+            <div style="padding: 20px; background: #f5f5f5; margin: 10px 0; border: 1px solid #333;">
+                File preview not available
+            </div>
+            <a href="{link}" download class="download-btn">Download</a>
         </div>
         '''
 
@@ -109,17 +116,20 @@ def generate_index_html(users_data, users_config):
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            font-family: 'Courier New', Courier, monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
             padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
-            background: white;
+            background: #2a2a2a;
             max-width: 900px;
             margin: 0 auto;
-            padding: 30px;
-            border: 1px solid #ddd;
+            padding: 40px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
         }
 
         .login-section {
@@ -132,50 +142,61 @@ def generate_index_html(users_data, users_config):
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 20px;
+            color: #00ff00;
+            margin-bottom: 30px;
             font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            color: #333;
-            margin-bottom: 5px;
+            color: #00ff00;
+            margin-bottom: 8px;
             font-size: 14px;
+            text-transform: uppercase;
         }
 
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #00ff00;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
         }
 
         input[type="text"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: #333;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            background: #333;
-            color: white;
+            padding: 12px;
+            background: #00ff00;
+            color: #1a1a1a;
             border: none;
             font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            font-weight: bold;
             cursor: pointer;
+            letter-spacing: 1px;
         }
 
         .error {
-            color: red;
+            color: #ff6b6b;
             font-size: 13px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .files-section {
@@ -190,21 +211,24 @@ def generate_index_html(users_data, users_config):
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #00ff00;
         }
 
         .welcome-text {
-            color: #333;
+            color: #00ff00;
             font-size: 16px;
+            text-transform: uppercase;
         }
 
         .logout-btn {
             width: auto;
-            padding: 8px 16px;
-            background: #666;
-            font-size: 13px;
+            padding: 8px 20px;
+            background: #444;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            font-size: 12px;
         }
 
         .files-list {
@@ -212,8 +236,8 @@ def generate_index_html(users_data, users_config):
         }
 
         .file-item {
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
+            padding: 30px 0;
+            border-bottom: 1px solid #444;
         }
 
         .file-item:last-child {
@@ -221,29 +245,42 @@ def generate_index_html(users_data, users_config):
         }
 
         .file-info {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .file-name {
-            color: #333;
+            color: #00ff00;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             margin-bottom: 5px;
         }
 
         .file-size {
-            color: #666;
+            color: #888;
             font-size: 13px;
         }
 
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #00ff00;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
         .no-files {
-            color: #666;
+            color: #888;
             text-align: center;
             padding: 40px 20px;
         }
 
         a {
-            color: #0066cc;
+            color: #00ff00;
             text-decoration: none;
         }
 """
