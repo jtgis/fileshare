@@ -241,6 +241,12 @@ def generate_index_html(users_data, users_config):
             border-bottom: 1px solid #e0e0e0;
         }
 
+        .header-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
         .welcome-text {
             color: #999;
             font-size: 16px;
@@ -803,7 +809,10 @@ def generate_index_html(users_data, users_config):
         <div class="files-section" id="filesSection">
             <div class="user-header">
                 <div class="welcome-text"><span id="displayName"></span> file share</div>
-                <button class="logout-btn" onclick="logout()">logout</button>
+                <div class="header-right">
+                    <button class="logout-btn" onclick="downloadAll()">download all</button>
+                    <button class="logout-btn" onclick="logout()">logout</button>
+                </div>
             </div>
             
             <div class="files-list" id="filesGrid"></div>
@@ -825,16 +834,16 @@ def generate_index_html(users_data, users_config):
                 <button class="fullscreen-btn" id="fullscreenBtn" onclick="enterFullscreen()">fullscreen</button>
             </div>
         </div>
+    </div>
 
-        <div class="fullscreen-overlay" id="fsOverlay">
-            <div class="fs-content" id="fsContent"></div>
-            <div class="fs-bar">
-                <span class="fs-name" id="fsName"></span>
-                <span class="fs-counter" id="fsCounter"></span>
-                <button onclick="fsNav(-1)" id="fsPrev">← prev</button>
-                <button onclick="fsNav(1)" id="fsNext">next →</button>
-                <button onclick="exitFullscreen()">close</button>
-            </div>
+    <div class="fullscreen-overlay" id="fsOverlay">
+        <div class="fs-content" id="fsContent"></div>
+        <div class="fs-bar">
+            <span class="fs-name" id="fsName"></span>
+            <span class="fs-counter" id="fsCounter"></span>
+            <button onclick="fsNav(-1)" id="fsPrev">← prev</button>
+            <button onclick="fsNav(1)" id="fsNext">next →</button>
+            <button onclick="exitFullscreen()">close</button>
         </div>
     </div>
 
@@ -1012,6 +1021,7 @@ def generate_index_html(users_data, users_config):
                     html += '<td class="col-size">' + count + ' file' + (count !== 1 ? 's' : '') + '</td>';
                     html += '<td class="col-actions">';
                     html += '<a class="action-btn" href="#" onclick="event.stopPropagation();event.preventDefault();openFolder(' + fi + ')">view folder contents</a>';
+                    html += '<a class="action-btn" href="#" onclick="event.stopPropagation();event.preventDefault();downloadFolderByIdx(' + fi + ')">download folder</a>';
                     html += '</td>';
                     html += '</tr>';
                 }});
@@ -1139,6 +1149,39 @@ def generate_index_html(users_data, users_config):
             if (currentView === 'folder') {{
                 renderFileList();
             }}
+        }}
+
+        // Batch download
+        function batchDownload(files) {{
+            files.forEach((f, i) => {{
+                setTimeout(() => {{
+                    const a = document.createElement('a');
+                    a.href = downloadUrl(f);
+                    a.download = f.name;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }}, i * 500);
+            }});
+        }}
+
+        function downloadAll() {{
+            if (!currentFiles.length) return;
+            batchDownload(currentFiles);
+        }}
+
+        function downloadFolder(folderPath) {{
+            const files = currentFiles.filter(f => f.folder && (f.folder === folderPath || f.folder.startsWith(folderPath + '/')));
+            if (!files.length) return;
+            batchDownload(files);
+        }}
+
+        function downloadFolderByIdx(idx) {{
+            const name = folderNames[idx];
+            if (!name) return;
+            const fullPath = currentFolder ? currentFolder + '/' + name : name;
+            downloadFolder(fullPath);
         }}
 
         // Fullscreen mode
