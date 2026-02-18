@@ -2,5 +2,9 @@
   "testuser": {
     "password_hash": "b55c8792d1ce458e279308835f8a97b580263503e76e1998e279703e35ad0c2e",
     "display_name": "Testuser"
+  },
+  "seliger": {
+    "password_hash": "e6a97ab3a50a32a588983047c4d19d9841e54266dc88deff7e8985608ad1ef2d",
+    "display_name": "Seliger"
   }
 }
