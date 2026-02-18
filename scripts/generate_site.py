@@ -603,15 +603,16 @@ def generate_index_html(users_data, users_config):
         }
 
         .fullscreen-overlay .fs-content {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 52px;
+            bottom: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            z-index: 9999;
         }
 
         .fullscreen-overlay .fs-content img {
@@ -627,18 +628,20 @@ def generate_index_html(users_data, users_config):
         }
 
         .fullscreen-overlay .fs-bar {
-            position: absolute;
-            bottom: 0;
+            position: fixed;
             left: 0;
             right: 0;
-            height: 52px;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            padding-bottom: env(safe-area-inset-bottom, 0);
-            box-sizing: border-box;
-            background: rgba(0,0,0,0.9);
+            bottom: 0;
+            height: auto;
+            min-height: 60px;
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom, 0));
+            justify-content: center;
+            background: rgba(0,0,0,0.97);
             z-index: 10000;
+            box-shadow: 0 -2px 12px 0 rgba(0,0,0,0.5);
+            border-top: 2px solid #222;
         }
 
         .fullscreen-overlay .fs-bar .fs-name {
