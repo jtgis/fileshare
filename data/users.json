@@ -6,5 +6,9 @@
   "seliger": {
     "password_hash": "e6a97ab3a50a32a588983047c4d19d9841e54266dc88deff7e8985608ad1ef2d",
     "display_name": "Seliger"
+  },
+  "wells": {
+    "password_hash": "112dc0410f02e56a597d60458a0d9714c43a0784d843a87440a20e0993527d07",
+    "display_name": "Wells"
   }
 }
