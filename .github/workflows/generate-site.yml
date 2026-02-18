@@ -39,9 +39,6 @@ jobs:
           GDRIVE_ROOT_FOLDER_ID: ${{ secrets.GDRIVE_ROOT_FOLDER_ID }}
         run: |
           python scripts/gdrive_sync.py > data/gdrive_files.json
-          echo "=== Sync completed. Contents of gdrive_files.json ==="
-          cat data/gdrive_files.json
-          echo "=== End of gdrive_files.json ==="
 
       - name: Generate static site
         run: |
