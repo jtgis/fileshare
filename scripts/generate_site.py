@@ -691,7 +691,7 @@ def generate_index_html(users_data, users_config):
 
         <div class="files-section" id="filesSection">
             <div class="user-header">
-                <div class="welcome-text">welcome, <span id="displayName"></span></div>
+                <div class="welcome-text"><span id="displayName"></span> file share</div>
                 <button class="logout-btn" onclick="logout()">logout</button>
             </div>
             
