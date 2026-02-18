@@ -105,8 +105,21 @@ def get_shareable_link(service, file_id, category='other'):
         print(f"Error getting shareable link for {file_id}: {e}", file=sys.stderr)
         return f"https://drive.google.com/file/d/{file_id}/view"
 
-def get_file_category(ext):
-    """Categorize file by extension."""
+# Google Workspace MIME type mappings
+GOOGLE_NATIVE_TYPES = {
+    'application/vnd.google-apps.document': 'gdoc',
+    'application/vnd.google-apps.spreadsheet': 'gsheet',
+    'application/vnd.google-apps.presentation': 'gslides',
+    'application/vnd.google-apps.form': 'gform',
+    'application/vnd.google-apps.drawing': 'gdrawing',
+}
+
+def get_file_category(ext, mime_type=''):
+    """Categorize file by extension or MIME type."""
+    # Check Google native types first
+    if mime_type in GOOGLE_NATIVE_TYPES:
+        return GOOGLE_NATIVE_TYPES[mime_type]
+    
     video_exts = {'mp4', 'webm', 'ogg', 'm4v', 'avi', 'mov', 'mkv'}
     audio_exts = {'mp3', 'wav', 'ogg', 'flac', 'm4a', 'aac', 'wma'}
     image_exts = {'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'}
@@ -180,10 +193,15 @@ def sync_users_from_gdrive(root_folder_id):
                     print(f"  ✓ Entering subfolder: {sub_path}", file=sys.stderr)
                     collect_files(item['id'], sub_path)
                 else:
+                    mime_type = item.get('mimeType', '')
+                    # Skip unsupported Google Apps types (sites, maps, etc.)
+                    if mime_type.startswith('application/vnd.google-apps.') and mime_type not in GOOGLE_NATIVE_TYPES:
+                        print(f"  Skipping unsupported type: {item['name']} ({mime_type})", file=sys.stderr)
+                        continue
                     size = int(item.get('size', 0))
                     name = item['name']
                     ext = name.rsplit('.', 1)[-1].lower() if '.' in name else ''
-                    category = get_file_category(ext)
+                    category = get_file_category(ext, mime_type)
                     
                     # Make file publicly accessible
                     try:

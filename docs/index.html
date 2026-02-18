@@ -405,6 +405,17 @@
             vertical-align: middle;
         }
 
+        .back-folder-btn {
+            display: inline-block;
+            margin: 10px 0 16px 0;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .back-folder-btn:hover {
+            color: #333;
+        }
+
         .detail-nav {
             display: flex;
             justify-content: space-between;
@@ -582,7 +593,7 @@
 
     <script>
         const USER_HASHES = {"testuser": "b55c8792d1ce458e279308835f8a97b580263503e76e1998e279703e35ad0c2e", "seliger": "e6a97ab3a50a32a588983047c4d19d9841e54266dc88deff7e8985608ad1ef2d"};
-        const USER_FILES_ENC = {"seliger": "Pk1DV1YMBxFbFRICUl8ER1kWU0hUEhgXQV0AEwNEGwlEXFNPXlVucgoAW3VJCSEIBSoBCFlvcHx/MShDJA5dLUcaQRtECBhWQw8QQwcLTw0Yc3saHxAWUhtARgsZRlNIUxNJFRZRV0IBBFdKHUdcRhUMVVhfUBQcGEMCXgkCVxZHDEEbFRxOExoXXgBeV0MPGBpKTEFRQ1UGRhZIFw5JXxYdRRddVhQMREEJCBwzAgxyPFcJQEB3YFQDFFAMMEUdM1gtClkgJ2IOVgJDHxJDRlFCXBoJEBYFURpWEXImGxQUEwBNQBAMFkYJSF9GSUZEVARMXF9aREkaW0QTDAtTAwAUTRkVBw1fBVBCQwkSQxdFFBlDEV5VWgYWXhEbB1hVUUMEG15CURRIQxpRAEdcRhVUVgp8fVF0dSspZBcLHwFUWAZBVlcpCiVCbxsBcz5ddlobFBMSR14ZUUYLGUYNARoJRX52EBoWRgZATEZfRkRdFV8bFBUUU1kVAVYKFEtGXxZDUFoABVZDGRBDVV0NUV1KGwITEn1aAlMBABsZFRhPEwtUWVcUDERBS1EKAgoDGgNKXEtdG0JdBUlCERRTEwdTE0tOTA1dTEFRA19XTFJKXVxWHlJVVAhTFl5MCl0VUl4KURlUREMNFxVLEwADEhoIWVpKWhtaTQgHSEgWXgULQkxQWgAFVkxFWA5HXU9fSF8bFBMSXVNBDkQTCDBBamscXF1yAl5PA05Veg0SHi9hEVR0WgB5aEgXLHUnRB5ER0UIQ1JDWBNDBwJPARIqdxoUGRpWSEAVWRRGW0kDGxQUEwZUQFdRWRYaGgJERw8LVgJdGxQVFFZXDQBUF0QIREd/DFhQBFMRHBkQGhFcAFhdGgMYEWVaQwpACFRdRElKUUIAW0BTQl8LDRoUREcPAhVfGBsJQFVJXVICADNLWhYWYxNzQhMBdjsBYw5SRBNxUwxbd1lfU2Y7eTNlbC5beRYdRRdHW0xTRlkYGldLUEZ8JxoVGBdTSExDXhFHRB5ER1UATVIGDUEYFwpBEV0VXV1KGxQTElJYD1ABQxteGRphXxFcQF5TUkQFV1QAABRESjg=", "testuser": "OU4XDVlaXBBeEUEDXVldOldPWF5AVF1seDYLPgx6JRUQARsYXkUDEUkXFAxVGwMYRwMFXVpVBQZ9W1VcfisEC1JCUREOf0wLDGQOKUFzbioGBxsfEBpLWk8DGlsZFVcbCRB/dBEZEBEAT0JHCxkbVRUBFRUXElAER1AGC0IaEF9CF1QWXF5WEEgRQQNbWVwAQBUDExIaRR8VHRoPWFoHFwIQEFBaWVVsAE9XCEFVXGcvYnBmBQUDVVh3Tw5ABBBJQhdcBxoNGRBVUlRUU1ZzBkQCbUVqSWhYQSJ2B0tRVF9WBnhyal1vXRwVGkUTSlBCABANGRUCHVETeCNGHEMQABpBF1kYFVNCAxNPRRZWWRFXUFZBSRoCExcPVQBeUkAZGBJUWV9RVUFHDRZHE0QVGB4QWVhaVRFfExcHDVwGHwAaVFgTVFJmYiB3PFR5dxYVVlEbHxAaUVcXXBhDCFMwan95Akx5UwdDPUZEPUgKDWw3eX5qXAdLD2ZsPh0JQR5FQEZcGV0VAxJGAFNUAxsPRXl1Gx8QGl1LQUQCQRtHBlMaHBIUUFREVgJYRBwTAxkaFVZRGxsQEQNcWQUBQkEIRUAXSE8YTBtcBVwGRw4VGgNbW1xsVUBZXkUKXT50Z1ZqCQkABmwECH4iGVsVBRsVGEdbUxsNEBFUXFhVMHQ7f1UyB2xaAUNBQg8CNhJeQFs6fFx9QkABQnUXShhDSl4YUBoKEhQCAh4DRXp0Rx0ZG10dRhUDFxJeFQcXTUQSAFMRB1JaEUEVAxJGRwoBUVoaSRIVX1xcXF1BF1wYQxtKPw=="};
+        const USER_FILES_ENC = {"testuser": "OU4XDVlaXBBeEUEDXVldSFdPWF5AVF1sZSJ+Pgh6IBtIVFQUHxUSWgEVDEUTCF1qOnV+CU16VVJDbRAWaBoBUTZnfiprXA5KDmQ6Ok0MGkkSFUpaSl0aCRVECVEIAEwCGHtwFB8VElYdQxRfERtJXAMQGxkVU1IRVlIOFklBCEVARVEFGhsZEAJeDwFRRxpfEhUbThwYQxFbB1UEGw1CF15ZXlNsUEhSCEdaAG50aQs6B3p+FxgCTB1YEVcSTxJHC1EXWRgVCAAAXAZTV3tWUQp5cQVeCE9XR1BwFABfN1h0RXRgfAEAEUkXFBZYQ1waXxIVDBkBEyhxF01EEgZKEUAPFUFVRwoQSBFBBlVBXQJdRUARChgaUkACUQ4bG0IXXl9eUlZHEglFFVsQQlBaGhgeF0IVXlIIVhdbRBIFWwkHalAbWVpJXgFuKTVzagpQAgdScR5SSFQXShhDUFNADxgSA1UEBFdQLlRAUGVPY0k1WUN9eVZBAwVfD1J6J2sNPVtMQRQXG0ENSwZHDhUaVxwDGX5yGhQTFwNAFRsNQhdSQFUUHxUSUARDUwJeS0AaXxIVUFpRVAARGUFGVgxeAQdHF1kYFUlaC0UMFhZIFEVJFVdSXV0aCRVEXghVUj1QQFFfRl9Qb341A2lUCAsJZ1QKen4ZXUNRERlBRlkHEF9CFwQMVQNtdjx8UzUGbAFcRk9JWANtT1lABWcvUnMTRQFKdBQfFRJADE1TRwsZGwlSHAcZenIRSRMXBBxEQQhFQFhFVxobGRAHUBcAU1pKHBANGRFGUVxWWkQUQRtRDVlcVUAUCRUSRQxTUwpCG0Rl"};
 
         function xorDecrypt(b64, key) {
             const raw = atob(b64);
@@ -599,6 +610,11 @@
                 audio: '<svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>',
                 image: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>',
                 pdf: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+                gdoc: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>',
+                gsheet: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>',
+                gslides: '<svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>',
+                gform: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><circle cx="8" cy="13" r="1"></circle><circle cx="8" cy="17" r="1"></circle><line x1="11" y1="13" x2="16" y2="13"></line><line x1="11" y1="17" x2="16" y2="17"></line></svg>',
+                gdrawing: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>',
                 other: '<svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>'
             };
             return icons[cat] || icons.other;
@@ -683,9 +699,19 @@
         }
 
         const folderSvg = '<svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>';
+        const googleNativeTypes = ['gdoc', 'gsheet', 'gslides', 'gform', 'gdrawing'];
+        const categoryLabel = {gdoc: 'document', gsheet: 'spreadsheet', gslides: 'slides', gform: 'form', gdrawing: 'drawing'};
+        function catLabel(cat) { return categoryLabel[cat] || cat; }
+        function downloadUrl(f) {
+            if (googleNativeTypes.includes(f.category)) {
+                const base = f.category === 'gsheet' ? 'spreadsheets' : f.category === 'gslides' ? 'presentation' : f.category === 'gdoc' ? 'document' : 'document';
+                return 'https://docs.google.com/' + base + '/d/' + f.id + '/export?format=pdf';
+            }
+            return 'https://drive.google.com/uc?export=download&id=' + f.id;
+        }
         let currentView = 'root';
         let currentFolder = '';
-        let folderFiles = [];
+        let levelFiles = [];
         let folderNames = [];
 
         function renderFileList() {
@@ -695,94 +721,110 @@
                 return;
             }
 
-            if (currentView === 'folder') {
-                renderFolderView(grid);
-                return;
-            }
+            const prefix = currentFolder ? currentFolder + '/' : '';
 
-            // Root view: show folders as clickable rows, then root files
-            const folders = [...new Set(currentFiles.filter(f => f.folder).map(f => f.folder.split('/')[0]))];
-            folderNames = folders;
-            const rootFiles = currentFiles.filter(f => !f.folder);
+            // Files directly at this level
+            levelFiles = currentFolder
+                ? currentFiles.filter(f => f.folder === currentFolder)
+                : currentFiles.filter(f => !f.folder);
+
+            // Subfolders at this level
+            const subfolderSet = new Set();
+            currentFiles.forEach(f => {
+                if (!f.folder) return;
+                if (currentFolder) {
+                    if (f.folder.startsWith(prefix) && f.folder !== currentFolder) {
+                        const rest = f.folder.slice(prefix.length);
+                        const next = rest.split('/')[0];
+                        if (next) subfolderSet.add(next);
+                    }
+                } else {
+                    subfolderSet.add(f.folder.split('/')[0]);
+                }
+            });
+            const subfolders = [...subfolderSet].sort();
+            folderNames = subfolders;
 
             let html = '';
-            if (folders.length) {
+
+            // Back button + heading when inside a folder
+            if (currentFolder) {
+                html += '<div class="folder-heading">' + folderSvg + '<span>' + currentFolder + '</span></div>';
+                html += '<a class="action-btn back-folder-btn" href="#" onclick="event.preventDefault();goBack()">← back</a>';
+            }
+
+            // Render subfolders
+            if (subfolders.length) {
                 html += '<table class="file-table">';
-                folders.forEach((name, fi) => {
-                    const count = currentFiles.filter(f => f.folder && f.folder.split('/')[0] === name).length;
+                subfolders.forEach((name, fi) => {
+                    const fullPath = currentFolder ? currentFolder + '/' + name : name;
+                    const count = currentFiles.filter(f => f.folder && (f.folder === fullPath || f.folder.startsWith(fullPath + '/'))).length;
                     html += '<tr class="file-row folder-row" onclick="openFolder(' + fi + ')">';
                     html += '<td class="col-icon">' + folderSvg + '<span class="type-label">folder</span></td>';
                     html += '<td class="col-name">' + name + '</td>';
                     html += '<td class="col-size">' + count + ' file' + (count !== 1 ? 's' : '') + '</td>';
-                    html += '<td class="col-actions"></td>';
-                    html += '</tr>';
-                });
-                html += '</table>';
-            }
-
-            if (rootFiles.length) {
-                html += '<table class="file-table">';
-                rootFiles.forEach((f, i) => {
-                    const ri = currentFiles.indexOf(f);
-                    html += '<tr class="file-row">';
-                    html += '<td class="col-icon">' + fileIcon(f.category) + '<span class="type-label">' + f.category + '</span></td>';
-                    html += '<td class="col-name">' + f.name + '</td>';
-                    html += '<td class="col-size">' + f.size + '</td>';
                     html += '<td class="col-actions">';
-                    html += '<a class="action-btn" href="#" onclick="event.preventDefault();openFileFromRoot(' + ri + ')">view file</a>';
-                    html += '<a class="action-btn" href="https://drive.google.com/uc?export=download&id=' + f.id + '" download>download file</a>';
+                    html += '<a class="action-btn" href="#" onclick="event.stopPropagation();event.preventDefault();openFolder(' + fi + ')">view folder contents</a>';
                     html += '</td>';
                     html += '</tr>';
                 });
                 html += '</table>';
             }
 
-            if (!folders.length && !rootFiles.length) {
-                html = '<p class="no-files">no files available</p>';
+            // Render files at this level
+            if (levelFiles.length) {
+                html += '<table class="file-table">';
+                levelFiles.forEach((f, i) => {
+                    const gi = currentFiles.indexOf(f);
+                    html += '<tr class="file-row">';
+                    html += '<td class="col-icon">' + fileIcon(f.category) + '<span class="type-label">' + catLabel(f.category) + '</span></td>';
+                    html += '<td class="col-name">' + f.name + '</td>';
+                    html += '<td class="col-size">' + f.size + '</td>';
+                    html += '<td class="col-actions">';
+                    html += '<a class="action-btn" href="#" onclick="event.preventDefault();openFileDetail(' + gi + ',' + i + ')">view file</a>';
+                    html += '<a class="action-btn" href="' + downloadUrl(f) + '" download>download file</a>';
+                    html += '</td>';
+                    html += '</tr>';
+                });
+                html += '</table>';
             }
-            grid.innerHTML = html;
-        }
 
-        function renderFolderView(grid) {
-            folderFiles = currentFiles.filter(f => f.folder && f.folder.split('/')[0] === currentFolder);
-            let html = '<div class="folder-heading">' + folderSvg + '<span>' + currentFolder + '</span></div>';
-            html += '<table class="file-table">';
-            folderFiles.forEach((f, i) => {
-                html += '<tr class="file-row">';
-                html += '<td class="col-icon">' + fileIcon(f.category) + '<span class="type-label">' + f.category + '</span></td>';
-                html += '<td class="col-name">' + f.name + '</td>';
-                html += '<td class="col-size">' + f.size + '</td>';
-                html += '<td class="col-actions">';
-                html += '<a class="action-btn" href="#" onclick="event.preventDefault();openFileFromFolder(' + i + ')">view file</a>';
-                html += '<a class="action-btn" href="https://drive.google.com/uc?export=download&id=' + f.id + '" download>download file</a>';
-                html += '</td>';
-                html += '</tr>';
-            });
-            html += '</table>';
+            if (!subfolders.length && !levelFiles.length) {
+                html += '<p class="no-files">' + (currentFolder ? 'no files in this folder' : 'no files available') + '</p>';
+            }
             grid.innerHTML = html;
         }
 
         function openFolder(idx) {
             const name = folderNames[idx];
             if (!name) return;
+            currentFolder = currentFolder ? currentFolder + '/' + name : name;
             currentView = 'folder';
-            currentFolder = name;
-            history.pushState({view: 'folder', folder: name}, '');
+            history.pushState({view: 'folder', folder: currentFolder}, '');
+            renderFileList();
+        }
+
+        function goBack() {
+            if (!currentFolder) return;
+            const parts = currentFolder.split('/');
+            parts.pop();
+            currentFolder = parts.join('/');
+            currentView = currentFolder ? 'folder' : 'root';
+            history.pushState({view: currentView, folder: currentFolder}, '');
             renderFileList();
         }
 
         let currentIndex = -1;
         let navContext = 'none';
 
-        function openFileFromRoot(index) {
-            navContext = 'none';
-            showDetail(currentFiles[index]);
-        }
-
-        function openFileFromFolder(folderIdx) {
-            navContext = 'folder';
-            currentIndex = folderIdx;
-            showDetail(folderFiles[folderIdx]);
+        function openFileDetail(globalIdx, levelIdx) {
+            if (currentFolder && levelFiles.length > 1) {
+                navContext = 'folder';
+                currentIndex = levelIdx;
+            } else {
+                navContext = 'none';
+            }
+            showDetail(currentFiles[globalIdx]);
         }
 
         function showDetail(file) {
@@ -796,12 +838,16 @@
             document.getElementById('detailFileName').textContent = file.name;
             document.getElementById('detailIcon').innerHTML = fileIcon(file.category);
             const folderLabel = file.folder ? file.folder + ' · ' : '';
-            document.getElementById('detailFileMeta').textContent = folderLabel + file.category + ' · ' + file.size;
+            document.getElementById('detailFileMeta').textContent = folderLabel + catLabel(file.category) + ' · ' + file.size;
 
             const preview = document.getElementById('previewArea');
-            const downloadLink = 'https://drive.google.com/uc?export=download&id=' + file.id;
+            const isNative = googleNativeTypes.includes(file.category);
+            const dlLink = downloadUrl(file);
 
-            if (file.category === 'video') {
+            if (isNative) {
+                const embedBase = file.category === 'gsheet' ? 'https://docs.google.com/spreadsheets/d/' : file.category === 'gslides' ? 'https://docs.google.com/presentation/d/' : file.category === 'gdoc' ? 'https://docs.google.com/document/d/' : file.category === 'gform' ? 'https://docs.google.com/forms/d/' : 'https://docs.google.com/drawings/d/';
+                preview.innerHTML = '<iframe src="' + embedBase + file.id + '/preview"></iframe>';
+            } else if (file.category === 'video') {
                 preview.innerHTML = '<iframe src="https://drive.google.com/file/d/' + file.id + '/preview" allow="autoplay"></iframe>';
             } else if (file.category === 'audio') {
                 preview.innerHTML = '<iframe class="audio-frame" src="https://drive.google.com/file/d/' + file.id + '/preview"></iframe>';
@@ -813,15 +859,16 @@
                 preview.innerHTML = '<div class="no-preview">preview not available</div>';
             }
 
-            document.getElementById('downloadBtn').href = downloadLink;
+            document.getElementById('downloadBtn').href = dlLink;
+            document.getElementById('downloadBtn').textContent = isNative ? 'download as pdf' : 'download';
 
             // Show/hide prev/next nav
             const nav = document.getElementById('detailNav');
-            if (navContext === 'folder' && folderFiles.length > 1) {
+            if (navContext === 'folder' && levelFiles.length > 1) {
                 nav.style.display = 'flex';
                 document.getElementById('prevBtn').classList.toggle('disabled', currentIndex <= 0);
-                document.getElementById('nextBtn').classList.toggle('disabled', currentIndex >= folderFiles.length - 1);
-                document.getElementById('navCounter').textContent = (currentIndex + 1) + ' / ' + folderFiles.length;
+                document.getElementById('nextBtn').classList.toggle('disabled', currentIndex >= levelFiles.length - 1);
+                document.getElementById('navCounter').textContent = (currentIndex + 1) + ' / ' + levelFiles.length;
             } else {
                 nav.style.display = 'none';
             }
@@ -829,9 +876,9 @@
 
         function navFile(delta) {
             const newIndex = currentIndex + delta;
-            if (newIndex >= 0 && newIndex < folderFiles.length) {
+            if (newIndex >= 0 && newIndex < levelFiles.length) {
                 currentIndex = newIndex;
-                showDetail(folderFiles[newIndex]);
+                showDetail(levelFiles[newIndex]);
             }
         }
 
@@ -848,10 +895,12 @@
             if (detail.classList.contains('active')) {
                 detail.classList.remove('active');
                 document.getElementById('filesSection').classList.add('active');
-                if (currentView === 'folder') {
-                    renderFileList();
-                }
-            } else if (currentView === 'folder') {
+                renderFileList();
+            } else if (e.state && e.state.view === 'folder') {
+                currentView = 'folder';
+                currentFolder = e.state.folder || '';
+                renderFileList();
+            } else {
                 currentView = 'root';
                 currentFolder = '';
                 renderFileList();
