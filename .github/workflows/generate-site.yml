@@ -51,5 +51,5 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html data/gdrive_files.json
+          git add docs/index.html
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update site from Google Drive sync" && git push)
