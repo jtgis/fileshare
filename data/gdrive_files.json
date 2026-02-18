@@ -1,10 +1,3 @@
-✓ Google Drive API client initialized
-✓ Looking for users folder in 1kwWDWGzRozdhH75Il9uiXL6aOEPYO3Va
-✓ Found folder 'users'
-✓ Syncing user folders...
-✓ Processing user folder: testuser
-  ✓ Found 4 files for testuser
-✓ Sync complete: 1 users
 {
   "testuser": [
     {
